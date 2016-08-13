@@ -44,6 +44,10 @@ class Config:
         return self.config.getfloat('record', 'maxwait', fallback=None)
 
     @property
+    def record_stream(self):
+        return self.config.getboolean('record', 'stream', fallback=False)
+
+    @property
     def record_yes(self):
         return self.config.getboolean('record', 'yes', fallback=False)
 

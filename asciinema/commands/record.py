@@ -5,11 +5,14 @@ import tempfile
 from asciinema.commands.command import Command
 from asciinema.recorder import Recorder
 from asciinema.api import APIError
+from asciinema.stdout import Stdout
+from asciinema.stream import Stream
 
 
 class RecordCommand(Command):
 
-    def __init__(self, api, filename, command, title, assume_yes, quiet, max_wait, recorder=None):
+    def __init__(self, api, filename, command, title, assume_yes, quiet,
+            max_wait, stream, recorder=None):
         Command.__init__(self, quiet)
         self.api = api
         self.filename = filename
@@ -17,6 +20,7 @@ class RecordCommand(Command):
         self.title = title
         self.assume_yes = assume_yes or quiet
         self.max_wait = max_wait
+        self.stream = Stream if stream is True else Stdout
         self.recorder = recorder if recorder is not None else Recorder()
 
     def execute(self):
@@ -35,7 +39,8 @@ class RecordCommand(Command):
         self.print_info("Asciicast recording started.")
         self.print_info("""Hit Ctrl-D or type "exit" to finish.""")
 
-        self.recorder.record(self.filename, self.command, self.title, self.max_wait)
+        self.recorder.record(self.filename, self.command, self.title,
+                self.max_wait, self.stream)
 
         self.print_info("Asciicast recording finished.")
 

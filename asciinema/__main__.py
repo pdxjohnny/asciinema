@@ -22,7 +22,8 @@ def positive_float(value):
 
 def rec_command(args, config):
     api = Api(config.api_url, os.environ.get("USER"), config.api_token)
-    return RecordCommand(api, args.filename, args.command, args.title, args.yes, args.quiet, args.max_wait)
+    return RecordCommand(api, args.filename, args.command, args.title,
+            args.yes, args.quiet, args.max_wait, args.stream)
 
 
 def play_command(args, config):
@@ -80,6 +81,7 @@ For help on a specific command run:
     parser_rec.add_argument('-c', '--command', help='command to record, defaults to $SHELL', default=cfg.record_command)
     parser_rec.add_argument('-t', '--title', help='title of the asciicast')
     parser_rec.add_argument('-w', '--max-wait', help='limit recorded terminal inactivity to max <sec> seconds (can be fractional)', type=positive_float, default=maybe_str(cfg.record_max_wait))
+    parser_rec.add_argument('-s', '--stream', help='stream the terminal session', action='store_true', default=cfg.record_stream)
     parser_rec.add_argument('-y', '--yes', help='answer "yes" to all prompts (e.g. upload confirmation)', action='store_true', default=cfg.record_yes)
     parser_rec.add_argument('-q', '--quiet', help='be quiet, suppress all notices/warnings (implies -y)', action='store_true', default=cfg.record_quiet)
     parser_rec.add_argument('filename', nargs='?', default='', help='filename/path to save the recording to')

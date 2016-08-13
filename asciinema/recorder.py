@@ -12,9 +12,9 @@ class Recorder:
         self.pty_recorder = pty_recorder if pty_recorder is not None else PtyRecorder()
         self.env = env if env is not None else os.environ
 
-    def record(self, path, user_command, title, max_wait):
+    def record(self, path, user_command, title, max_wait, stdout=Stdout):
         command = user_command or self.env.get('SHELL') or 'sh'
-        stdout = Stdout(max_wait)
+        stdout = stdout(max_wait)
         env = os.environ.copy()
         env['ASCIINEMA_REC'] = '1'
 

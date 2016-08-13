@@ -6,4 +6,5 @@ tmp
 *.tar.xz
 *.zip
 *.egg-info
+*.swp
 /build
